@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.whatsyourbeem.travelwiser",
+            "sha256_cert_fingerprints": [
+                "23:EC:D1:B7:24:C6:9A:14:F3:0E:B9:3E:C2:2B:55:9A:8F:53:AC:8A:3D:CF:27:59:30:C8:BE:0D:FC:87:BF:65"
+            ]
+        }
+    }
+]
