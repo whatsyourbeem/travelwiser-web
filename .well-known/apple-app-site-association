@@ -3,11 +3,23 @@
         "apps": [],
         "details": [
             {
-                "appID": "8NKU5W8C72.com.whatsyourbeem.travelwiser",
+                "appIDs": [
+                    "8NKU5W8C72.com.whatsyourbeem.travelwiser"
+                ],
                 "paths": [
                     "*"
+                ],
+                "components": [
+                    {
+                        "/": "/*"
+                    }
                 ]
             }
+        ]
+    },
+    "webcredentials": {
+        "apps": [
+            "8NKU5W8C72.com.whatsyourbeem.travelwiser"
         ]
     }
 }
