@@ -1,45 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelWiser - 실시간 숙소 가격 추적</title>
+
     <!--  google search consol 소유권 확인 -->
     <meta
       name="google-site-verification"
       content="u8AZwnQIWVDu49wTDBt0rh7MzkZJ5LhS6eIsfnscO-c"
     />
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO 메타태그 -->
     <meta
-      http-equiv="refresh"
-      content="0; url=https://travelwiserintro-79310.bubbleapps.io/version-test"
+      name="description"
+      content="트래블와이저는 실시간 숙소 가격 변동을 추적하고 최저가 시점을 알려주는 여행자를 위한 앱이에요"
     />
-    <title>Redirecting...</title>
-
-    <!-- SEO 필수 태그 -->
-    <title>TravelWiser</title>
-    <meta name="description" content="똑똑한 여행자를 위한  실시간 숙소" />
-    <meta name="keywords" content="아고다, 가격 비교, 아고다 가격 비교" />
+    <meta
+      name="keywords"
+      content="숙소 가격 추적, 호텔 가격 알림, 실시간 숙소 가격, 여행 비용 절약, 저렴한 호텔 찾기, 숙소 가격 비교, 여행 숙소 예약, 최저가 숙소 알림, TravelWiser, 트래블와이저, 여행 앱 추천, 숙소 예약 앱, 아고다 가격 변동, 아고다 가격 비교, 아고다 최저가"
+    />
     <meta name="author" content="BEEM" />
 
-    <!-- Open Graph (SNS 미리보기) -->
-    <meta property="og:title" content="TravelWiser" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="TravelWiser - 실시간 숙소 가격 변동 추적 앱"
+    />
     <meta
       property="og:description"
-      content="똑똑한 여행자를 위한  실시간 숙소"
+      content="지금 이 순간에도 숙소 가격은 바뀌고 있어요. 가장 저렴해지는 순간을 놓치지 마세요!"
     />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/whatsyourbeem/beem-assets/refs/heads/main/travelwiser/screenshot/playstore/graphic_image.png?token=GHSAT0AAAAAAC75YUQMVBI62XBN5ZSQBV4OZ6YALNQ"
+      content="https://travelwiser.me/img/og-image.png"
     />
     <meta property="og:url" content="https://travelwiser.me/" />
-    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TravelWiser" />
 
-    <!-- Favicon -->
-    <link
-      rel="icon"
-      href="https://raw.githubusercontent.com/whatsyourbeem/beem-assets/refs/heads/main/travelwiser/appicon.png?token=GHSAT0AAAAAAC75YUQMV5T7QVTLPUQ7TPD4Z6YARNQ"
-      type="image/png"
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="TravelWiser - 실시간 숙소 가격 추적 앱"
     />
+    <meta
+      name="twitter:description"
+      content="지금 이 순간에도 숙소 가격은 바뀌고 있어요. 가장 저렴해지는 순간을 놓치지 마세요!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://travelwiser.me/img/og-image.png"
+    />
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <style>
+      :root {
+        --main-color: #38306a;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans KR", sans-serif;
+        background-color: #ffffff;
+        color: var(--main-color);
+      }
+
+      .top-bar {
+        background-color: var(--main-color);
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .top-bar img {
+        height: 36px;
+      }
+
+      .top-bar .title {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      .section {
+        padding: 50px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .section p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+        white-space: pre-line;
+        margin-bottom: 20px;
+      }
+
+      .store-buttons {
+        margin-top: 40px; /* 줄임 */
+        margin-bottom: 20px; /* 스크린샷1과 간격 늘림 */
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .store-buttons a img {
+        height: 48px; /* 버튼 크기 줄임 */
+      }
+
+      .screenshot {
+        margin: 0 auto 40px; /* 기본 간격 */
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 360px;
+        border-radius: 20px;
+        border: 2px solid #ccc; /* ✅ 회색 테두리 추가 */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* 간격 조절 전용 클래스 */
+      .mb-tight {
+        padding-bottom: 10px; /* 문구와 스크린샷 간 좁힘 */
+      }
+
+      .mt-loose {
+        margin-top: 50px; /* 스크린샷과 버튼 사이 여백 넓힘 */
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px;
+        margin-top: 60px;
+        font-size: 0.9rem;
+        color: #aaa;
+        background-color: #f9f9f9;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <!-- 상단 로고 -->
+    <div class="top-bar">
+      <img src="img/appicon.png" alt="앱 로고" />
+      <div class="title">TravelWiser</div>
+    </div>
+
+    <!-- 메인 메시지 -->
+    <section class="section">
+      <h2>똑똑한 여행자를 위한<br />실시간 숙소 가격 변동 추적</h2>
+      <p>
+        지금 이 순간에도 숙소 가격은 바뀌고 있어요<br />가장 저렴해지는 순간을
+        놓치지 마세요
+      </p>
+
+      <!-- 앱 다운로드 버튼 (상단) -->
+      <div class="store-buttons">
+        <a
+          href="https://play.google.com/store/apps/details?id=YOUR_APP_ID"
+          target="_blank"
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+            alt="Google Play에서 다운로드"
+          />
+        </a>
+        <a href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank">
+          <img
+            src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+            alt="App Store에서 다운로드"
+          />
+        </a>
+      </div>
+    </section>
+
+    <!-- 앱 스크린샷 1 -->
+    <div class="screenshot">
+      <img src="img/tw1.png" alt="앱 스크린샷 1" />
+    </div>
+
+    <!-- 기능 설명 1 -->
+    <section class="section mb-tight">
+      <h2>실시간 가격 확인</h2>
+      <p>
+        목표 가격을 설정하고<br />목표가에 얼마나 근접했는지 빠르게 확인해요
+      </p>
+    </section>
+
+    <!-- 앱 스크린샷 2 -->
+    <div class="screenshot">
+      <img src="img/tw2.png" alt="앱 스크린샷 2" />
+    </div>
+
+    <!-- 기능 설명 2 -->
+    <section class="section mb-tight">
+      <h2>숙소 특징 비교</h2>
+      <p>원하는 숙소를 찜해두고<br />주요 특징을 한 눈에 비교해요</p>
+    </section>
+
+    <!-- 앱 스크린샷 3 -->
+    <div class="screenshot mb-tight">
+      <img src="img/tw3.png" alt="앱 스크린샷 3" />
+    </div>
+
+    <!-- 앱 다운로드 버튼 (하단) -->
+    <div class="store-buttons">
+      <a
+        href="https://play.google.com/store/apps/details?id=YOUR_APP_ID"
+        target="_blank"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+          alt="Google Play에서 다운로드"
+        />
+      </a>
+      <a href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank">
+        <img
+          src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+          alt="App Store에서 다운로드"
+        />
+      </a>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+      TravelWiser &nbsp;|&nbsp; © 2025. BEEM. All rights reserved.
+      <br />
+      <br />
+      <a
+        href="public/privacy-policy.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color: #aaa; text-decoration: underline; font-size: 0.9rem"
+      >
+        개인정보처리방침
+      </a>
+    </footer>
+  </body>
 </html>
