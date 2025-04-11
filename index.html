@@ -61,9 +61,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=42dot+Sans:wght@300..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    >
+    <link
+      href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css"
       rel="stylesheet"
     />
+
     <style>
       :root {
         --main-color: #38306a;
@@ -71,7 +76,7 @@
 
       body {
         margin: 0;
-        font-family: "42dot Sans", sans-serif;
+        font-family: "SUIT", sans-serif;
         background-color: #ffffff;
         color: var(--main-color);
       }
@@ -83,16 +88,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 8px;
       }
 
       .top-bar img {
-        height: 30px;
+        height: 28px;
       }
 
       .top-bar .title {
+        font-family: 'poppins', sans-serif;
         font-size: 1.1rem;
-        font-weight: bold;
       }
 
       .main-section {
@@ -151,11 +156,14 @@
       }
 
       .screenshot {
-        margin: 0 40px 30px 40px; /* 기본 간격 */
+        margin: 0 auto 30px;
         text-align: center;
+        padding: 0 20px;
       }
 
       .screenshot img {
+        width: 100%;
+        height: auto;
         max-width: 360px;
         border-radius: 20px;
         border: 2px solid #ccc; /* ✅ 회색 테두리 추가 */
