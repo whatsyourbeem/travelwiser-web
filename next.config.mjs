@@ -16,6 +16,20 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                // Booking.com (bstatic.com) 이미지 CDN을 허용합니다. (http)
+                protocol: 'http',
+                hostname: '**.bstatic.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                // Booking.com (bstatic.com) 이미지 CDN을 허용합니다. (https)
+                protocol: 'https',
+                hostname: '**.bstatic.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
     async headers() {

@@ -3,7 +3,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams, useRouter } from "next/navigation";
+// 1. usePathname 임포트 추가: URL 경로를 얻기 위해 Next.js의 usePathname 훅을 가져옵니다.
+import { useParams, useSearchParams, useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -71,6 +72,8 @@ const HotelDetailSkeleton = () => (
 
 const HotelDetailPage = () => {
   const router = useRouter();
+  // 2. usePathname 훅 사용: 현재 URL의 경로(예: /hotels/12345)를 가져옵니다.
+  const pathname = usePathname();
   const params = useParams();
   const hotelId = params.hotelId as string;
   const searchParams = useSearchParams();
@@ -80,17 +83,48 @@ const HotelDetailPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedLos, setSelectedLos] = useState<number>(los);
 
-  const todayDateStr = getTodayDateString();
-
-  // URL 쿼리 파라미터가 변경될 때마다 Zustand 스토어와 로컬 상태를 업데이트합니다.
+  // 3. URL 쿼리 파라미터 처리 로직 추가 및 수정
+  // 이 useEffect는 URL의 쿼리 파라미터를 확인하고, 필요한 경우 기본값을 설정하여 리디렉션합니다.
   useEffect(() => {
-    const queryCheckIn = searchParams.get("checkIn") || "";
-    const queryLos = parseInt(searchParams.get("los") || "2", 10);
-    const queryAdults = parseInt(searchParams.get("adults") || "2", 10);
-    setSearchCriteria(queryCheckIn, queryLos, queryAdults);
-    setSelectedDate(queryCheckIn ? new Date(queryCheckIn) : undefined);
-    setSelectedLos(queryLos);
-  }, [searchParams, setSearchCriteria]);
+    // 현재 URL의 쿼리 파라미터를 가져옵니다.
+    const currentParams = new URLSearchParams(Array.from(searchParams.entries()));
+
+    // 'checkIn', 'los', 'adults' 파라미터가 모두 있는지 확인합니다.
+    const hasAllParams = currentParams.has('checkIn') && currentParams.has('los') && currentParams.has('adults');
+
+    // 파라미터가 하나라도 없다면, 기본값으로 URL을 변경(리디렉션)합니다.
+    if (!hasAllParams) {
+      // 오늘 날짜를 'YYYY-MM-DD' 형식으로 계산합니다.
+      const today = new Date();
+      const checkInDate = today.toISOString().split('T')[0];
+
+      // URL에 설정할 기본 파라미터를 구성합니다.
+      const defaultParams = {
+        checkIn: checkInDate,
+        los: '2',
+        adults: '2',
+      };
+
+      // 새로운 URL 쿼리 문자열을 생성합니다.
+      const newQuery = new URLSearchParams(defaultParams).toString();
+      
+      // router.replace를 사용하여 URL을 변경합니다.
+      // 'replace'는 히스토리를 쌓지 않으므로, 사용자가 뒤로가기 시 이전 페이지로 이동합니다.
+      router.replace(`${pathname}?${newQuery}`);
+    } else {
+      // 모든 파라미터가 존재하면, 해당 값으로 상태를 업데이트합니다.
+      const queryCheckIn = currentParams.get("checkIn") || "";
+      const queryLos = parseInt(currentParams.get("los") || "2", 10);
+      const queryAdults = parseInt(currentParams.get("adults") || "2", 10);
+      
+      // Zustand 스토어와 UI 상태를 업데이트합니다.
+      setSearchCriteria(queryCheckIn, queryLos, queryAdults);
+      setSelectedDate(queryCheckIn ? new Date(queryCheckIn) : undefined);
+      setSelectedLos(queryLos);
+    }
+  }, [searchParams, pathname, router, setSearchCriteria]); // 의존성 배열: 쿼리 파라미터, 경로, 라우터 등이 변경될 때마다 실행됩니다.
+
+  const todayDateStr = getTodayDateString();
 
   // 호텔 정보 조회 쿼리
   const {

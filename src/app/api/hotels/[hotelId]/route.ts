@@ -59,10 +59,16 @@ export async function GET(
   };
 
   try {
-    // 서버 환경 변수에서 Agoda API 키를 안전하게 가져옵니다.
-    const apiKey = process.env.AGODA_API_KEY;
+    // 프로덕션 환경에서는 환경 변수에서 Agoda API 키를 가져옵니다.
+    let apiKey = process.env.AGODA_API_KEY;
+
+    // 개발 환경의 편의를 위해 하드코딩된 API 키를 사용합니다.
+    if (process.env.NODE_ENV !== 'production') {
+      apiKey = '1928152:051a304f-360d-4c43-814c-2beb5d992d22';
+    }
+
     if (!apiKey) {
-      // API 키가 설정되지 않은 경우, 500 Internal Server Error를 반환합니다.
+      // API 키가 없는 경우 에러를 반환합니다.
       throw new Error('API key is not configured on the server.');
     }
 
