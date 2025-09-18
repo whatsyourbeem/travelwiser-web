@@ -62,7 +62,7 @@ export default function PriceHistory({ data, isLoading, isError }: PriceHistoryP
   }
 
   // 데이터가 없거나 가격 정보가 없을 경우
-  if (!data || data.priceHistory.length === 0) {
+  if (!data || !data.priceHistory || data.priceHistory.length === 0) {
     return (
         <Card className="mt-6">
         <CardHeader>

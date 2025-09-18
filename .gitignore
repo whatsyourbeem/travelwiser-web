@@ -35,28 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# sitemap files (excluded due to large file size)
-public/sitemap/
-public/sitemaps/
-public/sitemap*.xml
-public/*.xml
-*.xml
-
-# large data files
-/travelwiser_json/
-/travelwiser_parametric_sitemaps/
-/data/travelwiser_json/
-/data/sitemaps/
-*.csv
-/data/*.csv
-
-# sitemap generation logs
-sitemap-generation.log
-/logs/sitemap-*.log
-
-# exceptions - keep these small files
-!public/robots.txt
-!public/favicon.ico
-!public/manifest.json
-!data/sample.json
-!data/config.json
+# Large data files
+/public/hotels/*.json

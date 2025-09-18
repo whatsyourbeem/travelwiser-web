@@ -1,2 +1,4 @@
+D:/Workspace/git-repository/travelwiser-web/public/sitemap.xml filter=lfs diff=lfs merge=lfs -text
+D:/Workspace/git-repository/travelwiser-web/public/hotel-index.json filter=lfs diff=lfs merge=lfs -text
 public/hotel-index.json filter=lfs diff=lfs merge=lfs -text
 public/sitemap.xml filter=lfs diff=lfs merge=lfs -text
