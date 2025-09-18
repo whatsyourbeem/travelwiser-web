@@ -1,4 +1,3 @@
-
 // /src/app/hotels/page.tsx
 "use client";
 
@@ -123,7 +122,7 @@ export default function HotelSearchPage() {
     // 선택된 호텔 ID와 날짜/숙박 정보를 조합하여 상세 페이지로 이동합니다.
     const checkIn = format(selectedDate, "yyyy-MM-dd");
     router.push(
-      `/hotels/${selectedHotel.hotel_id}?checkIn=${checkIn}&los=${los}&adults=${adults}`
+      `/hotels/${selectedHotel.hotel_id}?checkIn=${checkIn}&los=${adults}`
     );
   };
 
