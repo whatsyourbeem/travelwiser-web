@@ -41,6 +41,8 @@ export default function HotelSearchPage() {
   const [searchResults, setSearchResults] = useState<Hotel[]>([]);
   // API 호출 시 로딩 상태를 관리하는 상태
   const [isLoading, setIsLoading] = useState(false);
+  // 페이지 최초 로딩 상태를 관리
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // 검색 조건(날짜, 숙박일, 성인 수)을 위한 상태
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
@@ -49,49 +51,58 @@ export default function HotelSearchPage() {
   const [los, setLos] = useState(2);
   const [adults, setAdults] = useState(2);
 
-  // --- API 호출 및 디바운싱 ---
-  // hotelName 상태가 변경될 때마다 실행되는 useEffect 훅
+  // --- API 호출 ---
+  /**
+   * 호텔 검색 API(/api/search-hotels)를 호출하는 비동기 함수
+   * @param name - 검색할 호텔 이름 (옵션)
+   */
+  const fetchHotels = async (name?: string) => {
+    setIsLoading(true);
+    try {
+      const url = name
+        ? `/api/search-hotels?name=${name}`
+        : "/api/search-hotels";
+      const response = await fetch(url);
+      const data: Hotel[] = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error("호텔 데이터 로딩 중 오류 발생:", error);
+      alert("호텔 목록을 불러오는 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+      setIsInitialLoading(false);
+    }
+  };
+
+  // --- Effects ---
+  // 페이지가 처음 로드될 때 추천 호텔 목록을 가져옵니다.
   useEffect(() => {
-    // 이전에 선택된 호텔이 있고, 입력된 이름이 선택된 호텔 이름과 다르면 선택 상태를 초기화합니다.
+    fetchHotels();
+  }, []);
+
+  // hotelName 상태가 변경될 때마다 디바운싱하여 호텔을 검색합니다.
+  useEffect(() => {
     if (selectedHotel && hotelName !== selectedHotel.hotel_translated_name) {
       setSelectedHotel(null);
     }
 
-    // 검색어가 없으면 API를 호출하지 않습니다.
-    if (!hotelName || hotelName.length < 2) {
+    if (!hotelName) {
+      // 검색어가 없으면 추천 목록을 다시 보여주기 위해 초기 호텔 목록을 가져옵니다.
+      fetchHotels();
+      return;
+    }
+
+    if (hotelName.length < 2) {
       setSearchResults([]);
       return;
     }
 
-    // 디바운싱(Debouncing): 사용자가 타이핑을 멈춘 후 300ms가 지나면 API를 호출합니다.
-    // 불필요한 API 호출을 줄여 성능을 향상시킵니다.
     const debounceTimer = setTimeout(() => {
-      // API 호출 함수 실행
-      searchHotels();
+      fetchHotels(hotelName);
     }, 300);
 
-    // 컴포넌트가 언마운트되거나, hotelName이 변경되면 이전 타이머를 제거합니다.
     return () => clearTimeout(debounceTimer);
-  }, [hotelName]); // hotelName이 변경될 때마다 이 훅을 다시 실행합니다.
-
-  /**
-   * 호텔 검색 API(/api/search-hotels)를 호출하는 비동기 함수
-   */
-  const searchHotels = async () => {
-    setIsLoading(true); // 로딩 시작
-    try {
-      // 백엔드 API에 GET 요청을 보냅니다.
-      const response = await fetch(`/api/search-hotels?name=${hotelName}`);
-      const data: Hotel[] = await response.json();
-      // API로부터 받은 검색 결과를 상태에 저장합니다.
-      setSearchResults(data);
-    } catch (error) {
-      console.error("호텔 검색 API 호출 중 오류 발생:", error);
-      alert("호텔을 검색하는 중 오류가 발생했습니다.");
-    } finally {
-      setIsLoading(false); // 로딩 종료
-    }
-  };
+  }, [hotelName]);
 
   // --- 이벤트 핸들러 ---
   /**
@@ -100,7 +111,7 @@ export default function HotelSearchPage() {
   const handleSearch = () => {
     // 선택된 호텔이 없으면 사용자에게 알립니다.
     if (!selectedHotel) {
-      alert("검색 결과에서 호텔을 선택해주세요.");
+      alert("호텔을 선택해주세요.");
       return;
     }
     // 체크인 날짜가 없으면 사용자에게 알립니다.
@@ -155,18 +166,33 @@ export default function HotelSearchPage() {
               )}
             </div>
             {/* 검색 결과 표시 섹션 */}
-            {searchResults.length > 0 && (
-              <ul className="absolute top-full z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
-                {searchResults.map((hotel) => (
-                  <li
-                    key={hotel.hotel_id}
-                    onClick={() => handleSelectHotel(hotel)}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  >
-                    {hotel.hotel_translated_name}
-                  </li>
-                ))}
-              </ul>
+            {(isInitialLoading || searchResults.length > 0) && (
+              <Card className="mt-4">
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    {hotelName ? "검색 결과" : "추천 호텔"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {isInitialLoading ? (
+                    <div className="flex justify-center items-center p-8">
+                      <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                    </div>
+                  ) : (
+                    <ul className="max-h-80 overflow-y-auto">
+                      {searchResults.map((hotel) => (
+                        <li
+                          key={hotel.hotel_id}
+                          onClick={() => handleSelectHotel(hotel)}
+                          className="p-3 hover:bg-gray-100 cursor-pointer rounded-md transition-colors"
+                        >
+                          {hotel.hotel_translated_name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </CardContent>
+              </Card>
             )}
           </div>
 
