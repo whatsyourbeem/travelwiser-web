@@ -317,22 +317,7 @@ const HotelDetailPage = () => {
           <CardTitle>{hotel.roomtypeName}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold text-blue-600">
-              {new Intl.NumberFormat("ko-KR").format(displayPrice)}{" "}
-              {hotel.currency}
-            </div>
-            {hotel.discountPercentage > 0 && (
-              <div className="text-right">
-                <p className="text-gray-500 line-through">
-                  {new Intl.NumberFormat("ko-KR").format(hotel.crossedOutRate)}
-                </p>
-                <Badge variant="destructive">
-                  {hotel.discountPercentage}% 할인
-                </Badge>
-              </div>
-            )}
-          </div>
+          {/* 2025-10-11: 사용자 요청에 따라 현재 가격 표시 섹션을 제거했습니다. */}
           <div className="flex flex-wrap gap-2">
             {hotel.includeBreakfast && <Badge>조식 포함</Badge>}
             {hotel.freeWifi && <Badge>무료 WIFI</Badge>}
