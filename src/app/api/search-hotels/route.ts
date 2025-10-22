@@ -1,7 +1,5 @@
 // /src/app/api/search-hotels/route.ts
 import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs/promises";
 
 // 호텔 정보 타입을 정의합니다.
 interface Hotel {
@@ -10,14 +8,11 @@ interface Hotel {
   hotel_name: string;
 }
 
-// 미리 생성해둔 호텔 인덱스 파일의 경로를 설정합니다.
-const hotelIndexPath = path.join(process.cwd(), "public", "hotel-index.json");
-
-// 호텔 데이터를 메모리에 캐시하여, 반복적인 파일 읽기를 방지합니다.
+// 호텔 데이터를 메모리에 캐시하여, 반복적인 API 요청을 방지합니다.
 let hotelCache: Hotel[] | null = null;
 
 /**
- * 호텔 인덱스 파일을 읽어와 메모리에 캐시하는 함수
+ * 호텔 인덱스 데이터를 가져와 메모리에 캐시하는 함수
  * @returns {Promise<Hotel[]>} 호텔 데이터 배열
  */
 async function getHotels() {
@@ -25,9 +20,12 @@ async function getHotels() {
   if (hotelCache) {
     return hotelCache;
   }
-  // 캐시가 없으면 파일을 읽어옵니다.
-  const fileContent = await fs.readFile(hotelIndexPath, "utf-8");
-  hotelCache = JSON.parse(fileContent);
+  // 수정: 로컬 파일 대신 외부 URL에서 호텔 인덱스 데이터를 가져옵니다.
+  const response = await fetch(
+    "https://api.travelwiser.me/static-web-data/hotel-index.json"
+  );
+  // 수정: fetch 응답을 JSON으로 파싱합니다.
+  hotelCache = await response.json();
   return hotelCache as Hotel[];
 }
 
